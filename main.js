@@ -50,7 +50,7 @@ function createButtons() {
     });
 
     changeColorButton.addEventListener('click', () => {
-        return;
+        changeColor();
     });
 
     buttonContainer.appendChild(clearButton);
@@ -77,6 +77,33 @@ function getCellCount() {
 function changeCellCount() {
     document.body.innerHTML = '';
     main();
+}
+
+function changeColor() {
+    const selectColor = document.createElement('select');
+    selectColor.classList.add('select-color');
+    const colors = ['black', 'red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'brown', 'black', 'white'];
+    colors.forEach(color => {
+        const option = document.createElement('option');
+        option.value = color;
+        option.textContent = color;
+        selectColor.appendChild(option);
+    });
+    document.body.appendChild(selectColor);
+
+    selectColor.addEventListener('change', () => {
+        let currentColor = selectColor.options[selectColor.selectedIndex].value;     //##### Continue with this
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => {
+            cell.removeEventListener('mouseover', () => {
+                cell.style.backgroundColor = 'black';
+            });
+            cell.addEventListener('mouseover', () => {
+                cell.style.backgroundColor = currentColor;
+            });
+            selectColor.remove();
+        });
+    });
 }
 
 function main() {

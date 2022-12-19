@@ -36,10 +36,6 @@ function createButtons() {
     const changeCellCountButton = document.createElement('button');
     changeCellCountButton.classList.add('change-cell-count-button');
     changeCellCountButton.textContent = 'Change Cell Count';
-    
-    const changeColorButton = document.createElement('button');
-    changeColorButton.classList.add('change-color-button');
-    changeColorButton.textContent = 'Change Color';
 
     clearButton.addEventListener('click', () => {
         clearGrid();
@@ -49,15 +45,37 @@ function createButtons() {
         changeCellCount();
     });
 
-    changeColorButton.addEventListener('click', () => {
-        changeColor();
-    });
-
     buttonContainer.appendChild(clearButton);
     buttonContainer.appendChild(changeCellCountButton);
-    buttonContainer.appendChild(changeColorButton);
     document.body.appendChild(buttonContainer);
 };
+
+function createColorSelect() {
+    const selectColor = document.createElement('select');
+    selectColor.classList.add('select-color');
+    const colors = ['black', 'red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'brown', 'white'];
+    colors.forEach(color => {
+        const option = document.createElement('option');
+        option.value = color;
+        option.textContent = color;
+        selectColor.appendChild(option);
+    });
+
+    selectColor.addEventListener('change', () => {
+        let currentColor = selectColor.options[selectColor.selectedIndex].value;
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => {
+            cell.removeEventListener('mouseover', () => {
+                cell.style.backgroundColor = 'black';
+            });
+            cell.addEventListener('mouseover', () => {
+                cell.style.backgroundColor = currentColor;
+            });
+        });
+    });
+
+    document.body.appendChild(selectColor);
+}
 
 function clearGrid() {
     const cells = document.querySelectorAll('.cell');
@@ -79,36 +97,11 @@ function changeCellCount() {
     main();
 }
 
-function changeColor() {
-    const selectColor = document.createElement('select');
-    selectColor.classList.add('select-color');
-    const colors = ['black', 'red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'brown', 'black', 'white'];
-    colors.forEach(color => {
-        const option = document.createElement('option');
-        option.value = color;
-        option.textContent = color;
-        selectColor.appendChild(option);
-    });
-    document.body.appendChild(selectColor);
-
-    selectColor.addEventListener('change', () => {
-        let currentColor = selectColor.options[selectColor.selectedIndex].value;     //##### Continue with this
-        const cells = document.querySelectorAll('.cell');
-        cells.forEach(cell => {
-            cell.removeEventListener('mouseover', () => {
-                cell.style.backgroundColor = 'black';
-            });
-            cell.addEventListener('mouseover', () => {
-                cell.style.backgroundColor = currentColor;
-            });
-            selectColor.remove();
-        });
-    });
-}
 
 function main() {
     createGrid();
     createButtons();
+    createColorSelect();
     allowDraw();
 }
 

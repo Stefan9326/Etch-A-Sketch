@@ -25,5 +25,28 @@ function allowDraw() {
     });
 }
 
+function createButtons() {
+    const buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('button-container');
+
+    const clearButton = document.createElement('button');
+    clearButton.classList.add('clear-button');
+    clearButton.textContent = 'Clear Grid';
+
+    const changeCellCountButton = document.createElement('button');
+    changeCellCountButton.classList.add('change-cell-count-button');
+    changeCellCountButton.textContent = 'Change Cell Count';
+    
+    const changeColorButton = document.createElement('button');
+    changeColorButton.classList.add('change-color-button');
+    changeColorButton.textContent = 'Change Color';
+
+    buttonContainer.appendChild(clearButton);
+    buttonContainer.appendChild(changeCellCountButton);
+    buttonContainer.appendChild(changeColorButton);
+    document.body.appendChild(buttonContainer);
+};
+
 createGrid();
 allowDraw();
+createButtons();

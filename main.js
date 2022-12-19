@@ -16,4 +16,14 @@ function createGrid() {
     document.body.insertBefore(grid, document.querySelector('.button-container'));
 }
 
+function allowDraw() {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => {
+        cell.addEventListener('mouseover', () => {
+            cell.style.backgroundColor = 'black';
+        });
+    });
+}
+
 createGrid();
+allowDraw();

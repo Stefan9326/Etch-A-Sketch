@@ -1,7 +1,7 @@
 function createGrid() {
     const grid = document.createElement('div');
     grid.classList.add('grid');
-    const cellCount = 16;
+    const cellCount = getCellCount();
 
     for (let i = 0; i < cellCount; i++) {
         const row = document.createElement('div');
@@ -41,12 +41,48 @@ function createButtons() {
     changeColorButton.classList.add('change-color-button');
     changeColorButton.textContent = 'Change Color';
 
+    clearButton.addEventListener('click', () => {
+        clearGrid();
+    });
+
+    changeCellCountButton.addEventListener('click', () => {
+        changeCellCount();
+    });
+
+    changeColorButton.addEventListener('click', () => {
+        return;
+    });
+
     buttonContainer.appendChild(clearButton);
     buttonContainer.appendChild(changeCellCountButton);
     buttonContainer.appendChild(changeColorButton);
     document.body.appendChild(buttonContainer);
 };
 
-createGrid();
-allowDraw();
-createButtons();
+function clearGrid() {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => {
+        cell.style.backgroundColor = 'white';
+    });
+}
+
+function getCellCount() {
+    let cellCount = prompt('How many cells per side? (1-100)');
+    while (cellCount < 1 || cellCount > 100) {
+        cellCount = prompt('Invalid amount. Enter an amount between 1 and 100.');
+    }
+    return cellCount;
+}
+
+function changeCellCount() {
+    document.body.innerHTML = '';
+    main();
+}
+
+function main() {
+    createGrid();
+    createButtons();
+    allowDraw();
+}
+
+main();

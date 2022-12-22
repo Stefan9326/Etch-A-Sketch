@@ -1,7 +1,5 @@
-function createGrid() {
-    const grid = document.createElement('div');
-    grid.classList.add('grid');
-    const cellCount = getCellCount();
+function createGrid(cellCount=16) {
+    const grid = document.querySelector('#grid')
 
     for (let i = 0; i < cellCount; i++) {
         const row = document.createElement('div');
@@ -13,68 +11,31 @@ function createGrid() {
         }
         grid.appendChild(row);
     }
-    document.body.insertBefore(grid, document.querySelector('.button-container'));
 }
 
 function allowDraw() {
+    const selectColor = document.querySelector('#change-color');
+    let currentColor = selectColor.options[selectColor.selectedIndex].value;
     const cells = document.querySelectorAll('.cell');
+    selectColor.style.backgroundColor = currentColor;
     cells.forEach(cell => {
-        cell.addEventListener('mouseover', () => {
-            cell.style.backgroundColor = 'black';
-        });
+        cell.addEventListener('mouseover', () => {cell.style.backgroundColor = currentColor});
     });
 }
 
-function createButtons() {
-    const buttonContainer = document.createElement('div');
-    buttonContainer.classList.add('button-container');
+function activateButtons() {
+    const clearButton = document.querySelector('#clear-button')
+    clearButton.addEventListener('click', clearGrid);
 
-    const clearButton = document.createElement('button');
-    clearButton.classList.add('clear-button');
-    clearButton.textContent = 'Clear Grid';
-
-    const changeCellCountButton = document.createElement('button');
-    changeCellCountButton.classList.add('change-cell-count-button');
-    changeCellCountButton.textContent = 'Change Cell Count';
-
-    clearButton.addEventListener('click', () => {
-        clearGrid();
-    });
-
-    changeCellCountButton.addEventListener('click', () => {
-        changeCellCount();
-    });
-
-    buttonContainer.appendChild(clearButton);
-    buttonContainer.appendChild(changeCellCountButton);
-    document.body.appendChild(buttonContainer);
+    const changeCellCountButton = document.querySelector('#change-cell-count-button')
+    changeCellCountButton.addEventListener('click', changeCellCount);   
 };
 
-function createColorSelect() {
-    const selectColor = document.createElement('select');
-    selectColor.classList.add('select-color');
-    const colors = ['black', 'red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'brown', 'white'];
-    colors.forEach(color => {
-        const option = document.createElement('option');
-        option.value = color;
-        option.textContent = color;
-        selectColor.appendChild(option);
-    });
-
+function activateColorSelect() {
+    const selectColor = document.querySelector('#change-color');
     selectColor.addEventListener('change', () => {
-        let currentColor = selectColor.options[selectColor.selectedIndex].value;
-        const cells = document.querySelectorAll('.cell');
-        cells.forEach(cell => {
-            cell.removeEventListener('mouseover', () => {
-                cell.style.backgroundColor = 'black';
-            });
-            cell.addEventListener('mouseover', () => {
-                cell.style.backgroundColor = currentColor;
-            });
-        });
+        allowDraw();
     });
-
-    document.body.appendChild(selectColor);
 }
 
 function clearGrid() {
@@ -84,25 +45,21 @@ function clearGrid() {
     });
 }
 
-function getCellCount() {
+function changeCellCount() {
+    const grid = document.querySelector('#grid')
+    grid.innerHTML = ''
     let cellCount = prompt('How many cells per side? (1-100)');
     while (cellCount < 1 || cellCount > 100) {
         cellCount = prompt('Invalid amount. Enter an amount between 1 and 100.');
     }
-    return cellCount;
-}
-
-function changeCellCount() {
-    document.body.innerHTML = '';
-    main();
-}
-
-
-function main() {
-    createGrid();
-    createButtons();
-    createColorSelect();
+    createGrid(cellCount);
     allowDraw();
 }
 
-main();
+
+window.addEventListener('load', () => {
+    createGrid();
+    activateButtons();
+    activateColorSelect(); 
+    allowDraw();
+});

@@ -56,7 +56,7 @@ function clearGrid() {
 }
 
 function activateSlider() {
-    const resolutionSlider = document.querySelector('#resolution')
+    const resolutionSlider = document.querySelector('#resolution-slider')
     resolutionSlider.addEventListener('change', () => {
         const grid = document.querySelector('#grid')
         grid.innerHTML = ''

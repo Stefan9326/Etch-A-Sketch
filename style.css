@@ -34,9 +34,6 @@ main {
     border-radius: 8px;
     background-color: rgb(111, 122, 185);
     padding: 30px 40px 50px 40px;
-    /* align-items: center;
-    justify-content: center; */
-    /* gap: 32px; */
 }
 
 p {
@@ -71,11 +68,12 @@ p {
 
 input[type=range]{
     -webkit-appearance: none;
+    width: 175px;
 }
 
 input[type=range]::-webkit-slider-runnable-track {
     height: 5px;
-    width: auto;
+    /* width: auto; */
     cursor: pointer;
 }
 

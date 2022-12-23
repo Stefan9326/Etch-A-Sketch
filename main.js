@@ -13,13 +13,26 @@ function createGrid(cellCount=16) {
     }
 }
 
-function allowDraw() {
+let isMouseDown = false;
+
+function drawOnMouseDown() {
     const selectColor = document.querySelector('#change-color');
     let currentColor = selectColor.options[selectColor.selectedIndex].value;
     const cells = document.querySelectorAll('.cell');
     selectColor.style.backgroundColor = currentColor;
     cells.forEach(cell => {
-        cell.addEventListener('mouseover', () => {cell.style.backgroundColor = currentColor});
+        cell.addEventListener('mousedown', () => {
+            isMouseDown = true;
+            cell.style.backgroundColor = currentColor;
+          });
+          document.addEventListener('mouseup', () => {
+            isMouseDown = false;
+          });
+        cell.addEventListener('mouseover', () => {
+            if (isMouseDown) {
+                cell.style.backgroundColor = currentColor
+            };
+        });
     });
 }
 
@@ -34,7 +47,7 @@ function activateButtons() {
 function activateColorSelect() {
     const selectColor = document.querySelector('#change-color');
     selectColor.addEventListener('change', () => {
-        allowDraw();
+        drawOnMouseDown();
     });
 }
 
@@ -53,7 +66,7 @@ function changeCellCount() {
         cellCount = prompt('Invalid amount. Enter an amount between 1 and 100.');
     }
     createGrid(cellCount);
-    allowDraw();
+    drawOnMouseDown();
 }
 
 
@@ -61,5 +74,5 @@ window.addEventListener('load', () => {
     createGrid();
     activateButtons();
     activateColorSelect(); 
-    allowDraw();
+    drawOnMouseDown();
 });

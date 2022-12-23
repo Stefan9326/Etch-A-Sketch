@@ -36,12 +36,9 @@ function drawOnMouseDown() {
     });
 }
 
-function activateButtons() {
+function activateButton() {
     const clearButton = document.querySelector('#clear-button')
     clearButton.addEventListener('click', clearGrid);
-
-    const changeCellCountButton = document.querySelector('#change-cell-count-button')
-    changeCellCountButton.addEventListener('click', changeCellCount);   
 };
 
 function activateColorSelect() {
@@ -58,21 +55,21 @@ function clearGrid() {
     });
 }
 
-function changeCellCount() {
-    const grid = document.querySelector('#grid')
-    grid.innerHTML = ''
-    let cellCount = prompt('How many cells per side? (1-100)');
-    while (cellCount < 1 || cellCount > 100) {
-        cellCount = prompt('Invalid amount. Enter an amount between 1 and 100.');
-    }
-    createGrid(cellCount);
-    drawOnMouseDown();
+function activateSlider() {
+    const resolutionSlider = document.querySelector('#resolution')
+    resolutionSlider.addEventListener('change', () => {
+        const grid = document.querySelector('#grid')
+        grid.innerHTML = ''
+        createGrid(resolutionSlider.value);
+        drawOnMouseDown();
+        });
 }
 
 
 window.addEventListener('load', () => {
     createGrid();
-    activateButtons();
-    activateColorSelect(); 
+    activateButton();
+    activateColorSelect();
+    activateSlider(); 
     drawOnMouseDown();
 });

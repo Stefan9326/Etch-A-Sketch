@@ -73,7 +73,6 @@ input[type=range]{
 
 input[type=range]::-webkit-slider-runnable-track {
     height: 5px;
-    /* width: auto; */
     cursor: pointer;
 }
 
